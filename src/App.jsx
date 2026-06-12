@@ -11,12 +11,12 @@ function App() {
     fetchNotes();
   }, []);
   const addNote = async () => {
-    await axios.post(`${import.meta.env.VITE_URI}/todo`, { text });
+    await axios.post(`${import.meta.env.VITE_URI}/todo`, { title: text, description: "This is a note" });
     setText("");
     fetchNotes();
   };
   const deleteNote = async (id) => {
-    await axios.delete(`${import.meta.env.VITE_URI}/todo/:id`);
+    await axios.delete(`${import.meta.env.VITE_URI}/todo/${id}`);
     fetchNotes();
   };
   return (
@@ -32,7 +32,8 @@ function App() {
       <ol>
         {notes && notes.map((note) => (
           <li key={note._id}>
-            {note.text}{" "}
+            {note.title}{" "}
+            <p>{note.description}</p>
             <button onClick={() => deleteNote(note._id)}>Delete</button>
           </li>
         ))}
